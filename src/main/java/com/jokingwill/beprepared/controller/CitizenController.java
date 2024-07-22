@@ -1,2 +1,63 @@
-package com.jokingwill.beprepared.controller;public class CitizenController {
+package com.jokingwill.beprepared.controller;
+
+import com.jokingwill.beprepared.dto.request.CitizenRequestDto;
+import com.jokingwill.beprepared.dto.response.CitizenResponseDto;
+import com.jokingwill.beprepared.mapper.Mapper;
+import com.jokingwill.beprepared.service.CitizenService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/citizens")
+public class CitizenController {
+
+    private final Mapper mapper;
+    private final CitizenService citizenService;
+
+    @PostMapping("/")
+    public ResponseEntity<String> createCitizen(@RequestBody CitizenRequestDto citizenRequestDto){
+            return new ResponseEntity<>(citizenService.createCitizen(
+                    mapper.mapCitizenRequestToModel(citizenRequestDto),
+                    citizenRequestDto.getCityId()),
+                    HttpStatus.CREATED
+            );
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CitizenResponseDto>> getAllCitizens(){
+        return ResponseEntity.ok(mapper.mapCitizenToResponseDtoList(
+                citizenService.getAllCitizens()
+        ));
+    }
+
+    @GetMapping("/province")
+    public ResponseEntity<List<CitizenResponseDto>> getAllCitizenByProvince(@RequestParam Long id){
+        return ResponseEntity.ok(mapper.mapCitizenToResponseDtoList(
+                citizenService.getAllCitizensByProvinceId(id)
+        ));
+    }
+
+    @GetMapping("/city")
+    public ResponseEntity<List<CitizenResponseDto>> getAllCitizensByCityId(@RequestParam Long id){
+        return ResponseEntity.ok(mapper.mapCitizenToResponseDtoList(
+                citizenService.getAllCitizensByCityId(id)
+        ));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CitizenResponseDto> getCitizenById(@PathVariable Long id){
+        return ResponseEntity.ok(mapper.mapCitizenToResponseDto(
+                citizenService.getCitizenById(id)
+        ));
+    }
+
+    @PutMapping("/verify-account")
+    public ResponseEntity<String> verifyAccount(@RequestParam String otp){
+        return ResponseEntity.ok(citizenService.verifyAccount(otp));
+    }
 }

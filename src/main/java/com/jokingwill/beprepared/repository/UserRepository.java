@@ -1,2 +1,12 @@
-package com.jokingwill.beprepared.repository;public interface UserRepository {
+package com.jokingwill.beprepared.repository;
+
+import com.jokingwill.beprepared.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    boolean existsByEmail(String email);
+
 }
