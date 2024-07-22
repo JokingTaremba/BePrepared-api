@@ -5,6 +5,7 @@ import com.jokingwill.beprepared.dto.response.StatsResponse;
 import com.jokingwill.beprepared.dto.response.UserResponseDto;
 import com.jokingwill.beprepared.mapper.Mapper;
 import com.jokingwill.beprepared.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class UserController {
 
 
     @PostMapping("/")
-    public ResponseEntity<String> createUser(@RequestBody UserRequestDto userRequestDto){
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserRequestDto userRequestDto){
         return new ResponseEntity<>(userService.createUser(
                 mapper.mapUserRequestToModel(userRequestDto)),
                 HttpStatus.CREATED
