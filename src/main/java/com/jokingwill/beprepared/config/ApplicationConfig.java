@@ -1,5 +1,6 @@
 package com.jokingwill.beprepared.config;
 
+import com.jokingwill.beprepared.repository.CitizenRepository;
 import com.jokingwill.beprepared.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,11 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+    private final CitizenRepository citizenRepository;
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(()-> new UsernameNotFoundException("Usuario nao encontrado!"));
+        return new  UserDetailsConfig(userRepository, citizenRepository);
     }
 
     @Bean

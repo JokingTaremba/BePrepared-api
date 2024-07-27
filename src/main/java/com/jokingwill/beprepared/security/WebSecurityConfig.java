@@ -39,6 +39,7 @@ public class WebSecurityConfig {
                         .permitAll()
                         .requestMatchers("/api/v1/citizens/",
                                 "/api/v1/citizens/verify-account",
+                                "/api/v1/citizens/new-otp",
                                 "/api/v1/locations/")
                         .permitAll()
                         .requestMatchers("/api/v1/users/**").hasRole("ADMIN")

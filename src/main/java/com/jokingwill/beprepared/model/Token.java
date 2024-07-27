@@ -30,4 +30,8 @@ public class Token {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "citizen_id")
+    private Citizen citizen;
 }

@@ -1,5 +1,6 @@
 package com.jokingwill.beprepared.controller;
 
+import com.jokingwill.beprepared.dto.request.AuthenticationRequestForCitizen;
 import com.jokingwill.beprepared.dto.request.AuthenticationRequestForUser;
 import com.jokingwill.beprepared.dto.response.TokenResponse;
 import com.jokingwill.beprepared.service.AuthenticationService;
@@ -21,5 +22,11 @@ public class AuthenticationController {
     public ResponseEntity<TokenResponse> authenticate (@RequestBody AuthenticationRequestForUser authenticationRequest){
 
         return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenResponse> login(@RequestBody AuthenticationRequestForCitizen authenticationRequest){
+
+        return ResponseEntity.ok(authenticationService.authenticateCitizen(authenticationRequest));
     }
 }

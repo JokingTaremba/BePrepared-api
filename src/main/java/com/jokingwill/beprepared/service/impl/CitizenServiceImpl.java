@@ -4,10 +4,12 @@ import com.jokingwill.beprepared.exception.BadRequestException;
 import com.jokingwill.beprepared.exception.EntityNotFoundException;
 import com.jokingwill.beprepared.model.Citizen;
 import com.jokingwill.beprepared.model.City;
+import com.jokingwill.beprepared.model.enums.Role;
 import com.jokingwill.beprepared.repository.CitizenRepository;
 import com.jokingwill.beprepared.service.CitizenService;
 import com.jokingwill.beprepared.service.LocationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ public class CitizenServiceImpl implements CitizenService {
 
     private final LocationService locationService;
     private final CitizenRepository citizenRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -30,6 +33,7 @@ public class CitizenServiceImpl implements CitizenService {
         City city = locationService.getCityById(cityId);
         citizen.setCity(city);
         citizen.setVerified(false);
+        citizen.setRole(Role.USER);
         citizen.setOtp(generateOtp(6));
         var savedCitizen = citizenRepository.save(citizen);
         return "Cidadão criado com sucesso! O seu OTP é: " + savedCitizen.getOtp();
@@ -69,6 +73,17 @@ public class CitizenServiceImpl implements CitizenService {
         citizen.setOtp(null);
         citizenRepository.save(citizen);
         return "A tua conta foi verificada com sucesso!";
+    }
+
+    @Override
+    @Transactional
+    public String generateOTPForCitizen(String phone) {
+        Citizen citizen = citizenRepository.findByPhone(phone).orElseThrow(()->
+                new EntityNotFoundException("Cidadão não encontrado, não foi possivel gerar o seu OTP!"));
+        citizen.setOtp(null);
+        String otp = generateOtp(6);
+        citizen.setOtp(passwordEncoder.encode(otp));
+        return "O seu codigo de acesso e: " + otp;
     }
 
     private static String generateOtp(int length){

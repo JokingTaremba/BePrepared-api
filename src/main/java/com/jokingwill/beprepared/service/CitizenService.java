@@ -17,4 +17,6 @@ public interface CitizenService {
     Citizen getCitizenById(Long id);
 
     String verifyAccount(String otp);
+
+    String generateOTPForCitizen(String phone);
 }
