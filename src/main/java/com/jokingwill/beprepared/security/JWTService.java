@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private static final String SECRET_KEY = "HcnzzBGY8ZUyQqOeAgQV22Uo3Jmx0Mqi";
+    private static final String SECRET_KEY = "HcnzzBGY8ZUyQqOeAgQV22Uo3Jmx0Mqi53fdft63fdf26dfgd2y7d2d8y73y2gy3g3gdgefdddtgdye3tt3yy2yg";
     private static final long JWT_EXPIRATION = 86400000;
 
     public String extractUserFromToken(String token){
