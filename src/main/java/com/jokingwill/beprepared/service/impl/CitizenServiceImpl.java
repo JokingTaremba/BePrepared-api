@@ -72,18 +72,18 @@ public class CitizenServiceImpl implements CitizenService {
         citizen.setVerified(true);
         citizen.setOtp(null);
         citizenRepository.save(citizen);
-        return "A tua conta foi verificada com sucesso!";
+        return "A sua conta foi verificada com sucesso!";
     }
 
     @Override
     @Transactional
     public String generateOTPForCitizen(String phone) {
         Citizen citizen = citizenRepository.findByPhone(phone).orElseThrow(()->
-                new EntityNotFoundException("Cidadão não encontrado, não foi possivel gerar o seu OTP!"));
+                new EntityNotFoundException("Cidadão não encontrado, não foi possível gerar o seu OTP!"));
         citizen.setOtp(null);
         String otp = generateOtp(6);
         citizen.setOtp(passwordEncoder.encode(otp));
-        return "O seu codigo de acesso e: " + otp;
+        return "O seu código de acesso é: " + otp;
     }
 
     private static String generateOtp(int length){

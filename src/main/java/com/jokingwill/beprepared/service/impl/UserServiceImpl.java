@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public String createUser(User user) {
         if(userRepository.existsByEmail(user.getEmail())){
-            throw new BadRequestException("Já existe um usáurio com esse e-mail!");
+            throw new BadRequestException("Já existe um usáurio com esse email!");
         }
-        user.setRole(Role.ADMIN); // relacionada a autenticacao/ assim os ususarios serao atribuidos uma funcao com administrador
-        user.setPassword(passwordEncoder.encode(user.getPassword()));// relacionada a autenticacao/ assim nossa password sera criptografada
+        user.setRole(Role.ADMIN); //relacionado à autenticação - assim os usuários serão atribuídos uma função como administrador
+        user.setPassword(passwordEncoder.encode(user.getPassword()));//relacionado à autenticação - assim nossa senha será criptografada
         userRepository.save(user);
         return "Usuário criado com sucesso!";
     }

@@ -46,7 +46,7 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
         response.setCode(httpStatus.value());
         response.setStatus(httpStatus);
         response.setTimestamp(OffsetDateTime.now());
-        response.setTitle("Erro de Validacao de dados! Um ou mais campos estao invalidos");
+        response.setTitle("Erro de validação de dados! Um ou mais campos estão inválidos");
         response.setPath(request.getContextPath());
         response.setFields(validationErrors);
         return super.handleExceptionInternal(ex, response, headers, httpStatus, request);

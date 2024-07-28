@@ -29,7 +29,7 @@ public class AlertServiceImpl implements AlertService {
         alert.setCity(city);
         alert.setProvince(province);
         alertRepository.save(alert);
-        return "Alerta Criado com sucesso!";
+        return "Alerta criado com sucesso!";
     }
 
     @Override
