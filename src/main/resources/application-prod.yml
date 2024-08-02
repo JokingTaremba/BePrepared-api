@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: postgresql://dpg-cqm07m5svqrc73bef9eg-a.oregon-postgres.render.com:5432/beprepared_6v3o
+    url: jdbc:postgresql://dpg-cqm07m5svqrc73bef9eg-a.oregon-postgres.render.com:5432/beprepared_6v3o
     username: beprepared_6v3o_user
     password: 6kdukTQ7hGEJiCLxUvsvGUkIScJrk5Vb
     driver-class-name: org.postgresql.Driver
